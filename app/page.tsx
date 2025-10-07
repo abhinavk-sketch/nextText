@@ -52,6 +52,12 @@ export default async function Home() {
             Read our docs
           </a>
         </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-xl">Country: {cookieStore.get("user-country")?.value}</p>
+          <p className="text-xl">Region: {cookieStore.get("user-region")?.value}</p>
+          <p className="text-xl">City: {cookieStore.get("user-city")?.value}</p>
+          <p className="text-xl">IP: {cookieStore.get("user-ip")?.value}</p>
+        </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
@@ -99,12 +105,6 @@ export default async function Home() {
           />
           Go to nextjs.org →
         </a>
-
-        <div>
-          <p>Country: {cookieStore.get("user-country")?.value}</p>
-          <p>Region: {cookieStore.get("user-region")?.value}</p>
-          <p>City: {cookieStore.get("user-city")?.value}</p>
-        </div>
       </footer>
     </div>
   );

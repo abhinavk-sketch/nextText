@@ -5,16 +5,9 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   response.headers.set("pathname", request.nextUrl.pathname);
-  const country = request.headers.get("cf-ipcountry");
-  console.log("country", country);
 
 
-  const xfwd = request.headers.get("x-forwarded-for");
-  const ip = xfwd ? xfwd.split(",")[0].trim() : (request.headers.get("x-real-ip") || "");
-  if (ip){
-    // response.cookies.set("client_ip", ip, { httpOnly: true, path: "/" });
-    console.log("ip", ip);
-  }
+  const ip = request.headers.get("x-real-ip");
   const vercelCountry = request.headers.get("x-vercel-ip-country");
   const vercelRegion = request.headers.get("x-vercel-ip-country-region");
   const vercelCity = request.headers.get("x-vercel-ip-city");
@@ -35,6 +28,14 @@ export function middleware(request: NextRequest) {
 
   if (vercelCountry) {
     response.cookies.set("user-country", vercelCountry, { 
+      httpOnly: false, 
+      path: "/",
+      sameSite: "lax"
+    });
+  }
+
+  if (ip) {
+    response.cookies.set("user-ip", ip, { 
       httpOnly: false, 
       path: "/",
       sameSite: "lax"
